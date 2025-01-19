@@ -10,18 +10,29 @@ function App() {
   const handleRemix = async () => {
     setIsLoading(true)
     try {
-      const response = await fetch('/src/api/remix', {
+      const response = await fetch('/api/remix', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ text: inputText, prompt }),
       })
+      
+      const contentType = response.headers.get('content-type')
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error('Server response was not JSON')
+      }
+
       const data = await response.json()
+      
+      if (!response.ok) {
+        throw new Error(data.message || 'Server error occurred')
+      }
+      
       setOutputText(data.remixedText)
     } catch (error) {
       console.error('Error:', error)
-      setOutputText('Error occurred while remixing text')
+      setOutputText(`Error: ${error.message || 'An unexpected error occurred'}`)
     }
     setIsLoading(false)
   }
