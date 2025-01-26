@@ -3,6 +3,7 @@ import { createClient } from '@supabase/supabase-js'
 import { supabase } from './supabaseClient'
 import Auth from './components/Auth'
 import './App.css'
+import { ThemeSupa } from '@supabase/auth-ui-react'
 
 function App() {
   const [session, setSession] = useState(null)
@@ -20,6 +21,8 @@ function App() {
   const [editingPostId, setEditingPostId] = useState(null)
   const [editingPostContent, setEditingPostContent] = useState('')
   const [savedPostIds, setSavedPostIds] = useState(new Set())
+  const [lastRemixTime, setLastRemixTime] = useState(0)
+  const REMIX_COOLDOWN = 10000 // 10 seconds
 
   useEffect(() => {
     // Get initial session
@@ -130,6 +133,14 @@ function App() {
   }
 
   const handleRemix = async () => {
+    // Check if enough time has passed since last remix
+    const now = Date.now()
+    if (now - lastRemixTime < REMIX_COOLDOWN) {
+      setOutputText('Please wait a few seconds before generating again')
+      return
+    }
+    
+    setLastRemixTime(now)
     setIsLoading(true)
     try {
       const response = await fetch('/api/remix', {
@@ -175,7 +186,16 @@ function App() {
   }
 
   if (!session) {
-    return <Auth />
+    return (
+      <Auth
+        supabaseClient={supabase}
+        appearance={{ theme: ThemeSupa }}
+        providers={['google']}
+        options={{
+          enableReCaptcha: true,
+        }}
+      />
+    )
   }
 
   return (
