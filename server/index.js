@@ -28,9 +28,10 @@ app.post('/api/remix', async (req, res) => {
     const msg = await anthropic.messages.create({
       model: "claude-3-sonnet-20240229",
       max_tokens: 1024,
+      system: "You are a creative writing assistant that helps create tweets. Provide only the exact tweet text without any labels, numbers, or prefixes. The output should be ready to post directly to Twitter/X.",
       messages: [{ 
         role: "user", 
-        content: `${prompt}: "${text}"` 
+        content: `Write a tweet ${prompt}. Provide only the tweet text, without any labels or prefixes: "${text}"` 
       }]
     });
 
