@@ -4,6 +4,7 @@ import { supabase } from './supabaseClient'
 import Auth from './components/Auth'
 import './App.css'
 import { Auth as AuthUI } from '@supabase/auth-ui-react'
+import { Analytics } from "@vercel/analytics/react"
 
 function App() {
   const [session, setSession] = useState(null)
@@ -187,13 +188,16 @@ function App() {
 
   if (!session) {
     return (
-      <Auth
-        supabaseClient={supabase}
-        providers={['google']}
-        options={{
-          enableReCaptcha: true,
-        }}
-      />
+      <>
+        <Auth
+          supabaseClient={supabase}
+          providers={['google']}
+          options={{
+            enableReCaptcha: true,
+          }}
+        />
+        <Analytics />
+      </>
     )
   }
 
@@ -535,6 +539,7 @@ function App() {
       >
         {isSidebarOpen ? '→' : '←'}
       </button>
+      <Analytics />
     </div>
   )
 }
