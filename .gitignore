@@ -63,3 +63,6 @@ logs
 *.njsproj
 *.sln
 *.sw?
+
+# Project specific
+edit_file
