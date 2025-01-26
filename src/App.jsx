@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js'
 import { supabase } from './supabaseClient'
 import Auth from './components/Auth'
 import './App.css'
-import { ThemeSupa } from '@supabase/auth-ui-react'
+import { Auth as AuthUI } from '@supabase/auth-ui-react'
 
 function App() {
   const [session, setSession] = useState(null)
@@ -189,7 +189,6 @@ function App() {
     return (
       <Auth
         supabaseClient={supabase}
-        appearance={{ theme: ThemeSupa }}
         providers={['google']}
         options={{
           enableReCaptcha: true,
