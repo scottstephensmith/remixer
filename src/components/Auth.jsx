@@ -44,7 +44,7 @@ export default function Auth() {
       <div className="w-full max-w-md space-y-8 rounded-lg bg-white p-8 shadow">
         <div>
           <h2 className="text-center text-3xl font-bold tracking-tight text-gray-900">
-            Welcome to Tweet Remixer
+            Welcome to Content Remixer
           </h2>
         </div>
         <form className="mt-8 space-y-6">
