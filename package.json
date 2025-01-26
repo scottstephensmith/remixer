@@ -9,7 +9,10 @@
     "dev:all": "concurrently \"npm run dev\" \"npm run server\"",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "db:reset": "supabase db reset",
+    "db:push": "supabase db push",
+    "db:query": "supabase db remote query"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.33.1",
